@@ -1,0 +1,12 @@
+// Sample input for Compiler Frontend
+// Supports: int/float declarations, assignments, arithmetic
+
+int a;
+int b;
+float c;
+
+// Assignments with arithmetic
+a = 5;
+b = 3;
+a = a + b * 2;
+c = a + 1;

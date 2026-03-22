@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compiler Frontend — Academic Project</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="header-badge">Academic Project</div>
+    <h1 class="site-title">Compiler<br/><span>Frontend</span></h1>
+    <p class="site-sub">Lexical · Syntax · Semantic · TAC</p>
+  </header>
+
+  <!-- ── PHASE TABS ─────────────────────────────────────── -->
+  <nav class="phase-nav" id="phaseNav">
+    <button class="phase-btn active" data-phase="lexer">① Lexer</button>
+    <button class="phase-btn" data-phase="parser">② Parser</button>
+    <button class="phase-btn" data-phase="symtable">③ Symbol Table</button>
+    <button class="phase-btn" data-phase="semantic">④ Semantic</button>
+    <button class="phase-btn" data-phase="tac">⑤ TAC</button>
+    <button class="phase-btn" data-phase="files">📁 Files</button>
+  </nav>
+
+  <!-- ── MAIN CONTENT ───────────────────────────────────── -->
+  <main class="main-wrap">
+
+    <!-- SOURCE INPUT -->
+    <section class="input-section">
+      <label class="section-label">Source Code Input</label>
+      <textarea id="sourceInput" spellcheck="false">// Sample input program
+int a;
+int b;
+float c;
+a = 5;
+b = 3;
+a = a + b * 2;
+c = a + 1;</textarea>
+      <button id="runBtn" class="run-btn">▶ Run All Phases</button>
+    </section>
+
+    <!-- PHASE PANELS -->
+    <section class="panel-section">
+
+      <!-- LEXER PANEL -->
+      <div class="phase-panel active" id="panel-lexer">
+        <div class="panel-header">
+          <span class="panel-num">01</span>
+          <div>
+            <h2>Lexical Analyzer</h2>
+            <p>Tokenizes source code into keywords, identifiers, numbers, operators &amp; symbols.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="code-file-tag">lexer.cpp</div>
+          <div class="token-table-wrap">
+            <table class="token-table" id="tokenTable">
+              <thead><tr><th>LINE</th><th>TYPE</th><th>VALUE</th></tr></thead>
+              <tbody id="tokenBody">
+                <tr><td colspan="3" class="placeholder">Run the analyzer to see tokens →</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARSER PANEL -->
+      <div class="phase-panel" id="panel-parser">
+        <div class="panel-header">
+          <span class="panel-num">02</span>
+          <div>
+            <h2>Syntax Analyzer</h2>
+            <p>Recursive-descent parser validates declarations and arithmetic expressions.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="code-file-tag">parser.cpp</div>
+          <div class="grammar-box">
+            <strong>Grammar Rules:</strong><br/>
+            <span class="gram">program → statement*</span><br/>
+            <span class="gram">statement → decl_stmt | assign_stmt</span><br/>
+            <span class="gram">decl_stmt → type IDENTIFIER [= expr] ;</span><br/>
+            <span class="gram">expr → term ((+ | -) term)*</span><br/>
+            <span class="gram">term → factor ((* | /) factor)*</span><br/>
+            <span class="gram">factor → NUMBER | IDENTIFIER | ( expr )</span>
+          </div>
+          <div class="log-output" id="parseLog"><span class="placeholder-text">Run the analyzer to see parse steps →</span></div>
+        </div>
+      </div>
+
+      <!-- SYMBOL TABLE PANEL -->
+      <div class="phase-panel" id="panel-symtable">
+        <div class="panel-header">
+          <span class="panel-num">03</span>
+          <div>
+            <h2>Symbol Table</h2>
+            <p>Stores variable names, types and declaration lines for semantic lookup.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="code-file-tag">symbol_table.h</div>
+          <div class="token-table-wrap">
+            <table class="token-table" id="symTable">
+              <thead><tr><th>NAME</th><th>TYPE</th><th>LINE</th></tr></thead>
+              <tbody id="symBody">
+                <tr><td colspan="3" class="placeholder">Run the analyzer to see the symbol table →</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEMANTIC PANEL -->
+      <div class="phase-panel" id="panel-semantic">
+        <div class="panel-header">
+          <span class="panel-num">04</span>
+          <div>
+            <h2>Semantic Analyzer</h2>
+            <p>Checks declarations before use and basic type compatibility.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="code-file-tag">semantic.h</div>
+          <div class="log-output" id="semanticLog"><span class="placeholder-text">Run the analyzer to see semantic checks →</span></div>
+        </div>
+      </div>
+
+      <!-- TAC PANEL -->
+      <div class="phase-panel" id="panel-tac">
+        <div class="panel-header">
+          <span class="panel-num">05</span>
+          <div>
+            <h2>Intermediate Code (TAC)</h2>
+            <p>Three-Address Code generated for arithmetic expressions.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="code-file-tag">tac.h</div>
+          <div class="tac-output" id="tacOutput"><span class="placeholder-text">Run the analyzer to see TAC →</span></div>
+        </div>
+      </div>
+
+      <!-- FILES PANEL -->
+      <div class="phase-panel" id="panel-files">
+        <div class="panel-header">
+          <span class="panel-num">📁</span>
+          <div>
+            <h2>Project File Structure</h2>
+            <p>C++ source files for each compiler phase.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="file-tree" id="fileTree"></div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <span>Compiler Frontend · Academic Project · C++17</span>
+    <span class="footer-note">~50% Implementation · TODOs Marked</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
